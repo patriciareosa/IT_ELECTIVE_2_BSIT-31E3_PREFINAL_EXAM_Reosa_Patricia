@@ -1,0 +1,574 @@
+﻿@model List<IT_ELECTIVE_2_BSIT_31E3_PREFINAL_EXAM_Reosa_Patricia.Models.Question>
+
+@{
+    ViewData["Title"] = "Prefinal Exam";
+}
+
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        min-height: 100%;
+    }
+
+    body {
+        min-height: 100vh;
+        background-image: linear-gradient( rgba(0, 20, 30, 0.03), rgba(0, 20, 30, 0.08) ), url('/images/beach-bg.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    .exam-wrapper {
+        min-height: 100vh;
+        padding: 35px 15px 60px;
+        background: transparent;
+    }
+
+    .exam-header {
+        text-align: center;
+        color: white;
+        margin-bottom: 25px;
+        text-shadow: 0 2px 5px rgba(0,0,0,0.85), 0 4px 15px rgba(0,0,0,0.60);
+    }
+
+        .exam-header h1 {
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            margin-bottom: 5px;
+        }
+
+        .exam-header h3 {
+            font-size: 23px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .exam-header p {
+            font-size: 17px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+    .exam-card {
+        max-width: 820px;
+        margin: auto;
+        background: rgba(255,255,255,0.46);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        border: 1px solid rgba(255,255,255,0.75);
+        border-radius: 25px;
+        box-shadow: 0 15px 45px rgba(0,40,55,0.30);
+        overflow: hidden;
+    }
+
+    .exam-card-body {
+        padding: 34px;
+    }
+
+    .top-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        font-weight: 600;
+    }
+
+    #questionProgress {
+        background: rgba(255,255,255,0.78);
+        color: #06758b;
+        padding: 9px 16px;
+        border-radius: 50px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.10);
+    }
+
+    #savedMessage {
+        color: #08745f;
+        font-weight: 700;
+    }
+
+    .question-page h4 {
+        color: #0c3d49;
+        font-size: 20px;
+        font-weight: 750;
+        margin-bottom: 23px;
+        line-height: 1.5;
+    }
+
+    .choice-box {
+        background: rgba(255,255,255,0.72);
+        padding: 14px 17px;
+        border-radius: 14px;
+        margin-bottom: 12px;
+        border: 2px solid transparent;
+        transition: 0.25s;
+        cursor: pointer;
+    }
+
+        .choice-box:hover {
+            background: rgba(221,250,252,0.92);
+            border-color: #35b2c3;
+            transform: translateX(5px);
+        }
+
+        .choice-box:has(input:checked) {
+            background: rgba(190,246,248,0.93);
+            border-color: #089db0;
+            box-shadow: 0 5px 15px rgba(0,130,150,0.22);
+        }
+
+    .form-check-input {
+        cursor: pointer;
+        margin-top: 5px;
+    }
+
+    .form-check-label {
+        cursor: pointer;
+        width: 95%;
+        font-size: 16px;
+        color: #173d46;
+        font-weight: 500;
+    }
+
+    .navigation-buttons {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 28px;
+    }
+
+    .exam-button {
+        border: none;
+        padding: 11px 27px;
+        border-radius: 50px;
+        font-size: 15px;
+        font-weight: 700;
+        transition: 0.25s;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .previous-btn {
+        background: rgba(50,75,82,0.92);
+        color: white;
+    }
+
+        .previous-btn:hover {
+            background: #2f5058;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+    .next-btn {
+        background: linear-gradient( 135deg, #18bfd0, #087b9a );
+        color: white;
+    }
+
+        .next-btn:hover {
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 18px rgba(8,124,155,0.30);
+        }
+
+    .submit-btn {
+        background: linear-gradient( 135deg, #18a783, #086e62 );
+        color: white;
+    }
+
+        .submit-btn:hover {
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 18px rgba(8,110,98,0.30);
+        }
+
+    @@media (max-width: 768px) {
+
+        body {
+            background-attachment: scroll;
+            background-position: center;
+        }
+
+        .exam-wrapper {
+            padding: 20px 10px 40px;
+        }
+
+        .exam-header h1 {
+            font-size: 29px;
+        }
+
+        .exam-header h3 {
+            font-size: 18px;
+        }
+
+        .exam-card-body {
+            padding: 22px;
+        }
+
+        .top-info {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .navigation-buttons {
+            flex-direction: column;
+        }
+
+        .exam-button {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="exam-wrapper">
+
+    <div class="container">
+
+        <div class="exam-header">
+            <h1>IT ELECTIVE 2</h1>
+            <h3>PREFINAL EXAMINATION</h3>
+            <p>Patricia Reosa | BSIT-31E3</p>
+        </div>
+
+        <div class="exam-card">
+
+            <div class="exam-card-body">
+
+                <div class="top-info">
+
+                    <span id="questionProgress">
+                        Question 1 of @Model.Count
+                    </span>
+
+                    <span id="savedMessage">
+                        Correct answer selected ✓
+                    </span>
+
+                </div>
+
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    var question = Model[i];
+
+                    var displayStyle =
+                        i == 0 ? "block" : "none";
+
+                    <div class="question-page"
+                         id="question-@question.Number"
+                         data-question-number="@question.Number"
+                         data-correct-answer="@question.Answer.Substring(0, 1)"
+                         style="display:@displayStyle;">
+
+                        <h4>
+                            @question.Number. @question.QuestionText
+                        </h4>
+
+                        <div class="choice-box form-check">
+
+                            <input class="form-check-input answer-option"
+                                   type="radio"
+                                   name="question_@question.Number"
+                                   id="q@(question.Number)_A"
+                                   value="A" />
+
+                            <label class="form-check-label"
+                                   for="q@(question.Number)_A">
+                                A. @question.ChoiceA
+                            </label>
+
+                        </div>
+
+                        <div class="choice-box form-check">
+
+                            <input class="form-check-input answer-option"
+                                   type="radio"
+                                   name="question_@question.Number"
+                                   id="q@(question.Number)_B"
+                                   value="B" />
+
+                            <label class="form-check-label"
+                                   for="q@(question.Number)_B">
+                                B. @question.ChoiceB
+                            </label>
+
+                        </div>
+
+                        <div class="choice-box form-check">
+
+                            <input class="form-check-input answer-option"
+                                   type="radio"
+                                   name="question_@question.Number"
+                                   id="q@(question.Number)_C"
+                                   value="C" />
+
+                            <label class="form-check-label"
+                                   for="q@(question.Number)_C">
+                                C. @question.ChoiceC
+                            </label>
+
+                        </div>
+
+                        <div class="choice-box form-check">
+
+                            <input class="form-check-input answer-option"
+                                   type="radio"
+                                   name="question_@question.Number"
+                                   id="q@(question.Number)_D"
+                                   value="D" />
+
+                            <label class="form-check-label"
+                                   for="q@(question.Number)_D">
+                                D. @question.ChoiceD
+                            </label>
+
+                        </div>
+
+                    </div>
+                }
+
+                <div class="navigation-buttons">
+
+                    <button type="button"
+                            id="previousButton"
+                            class="exam-button previous-btn"
+                            onclick="previousQuestion()">
+
+                        ← Previous
+
+                    </button>
+
+                    <button type="button"
+                            id="nextButton"
+                            class="exam-button next-btn"
+                            onclick="nextQuestion()">
+
+                        Next →
+
+                    </button>
+
+                    <button type="button"
+                            id="submitButton"
+                            class="exam-button submit-btn"
+                            onclick="submitExam()"
+                            style="display:none;">
+
+                        Submit Exam ✓
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    let currentQuestion = 0;
+
+    const questionPages =
+        document.querySelectorAll(".question-page");
+
+    const totalQuestions =
+        questionPages.length;
+
+
+    // AUTO SELECT CORRECT ANSWERS
+    window.addEventListener("load", function() {
+
+        questionPages.forEach(function(page) {
+
+            const questionNumber =
+                page.dataset.questionNumber;
+
+            const correctAnswer =
+                page.dataset.correctAnswer;
+
+            const correctRadio =
+                page.querySelector(
+                    'input[value="' + correctAnswer + '"]'
+                );
+
+            if (correctRadio) {
+
+                correctRadio.checked = true;
+
+                localStorage.setItem(
+                    "question_" + questionNumber,
+                    correctAnswer
+                );
+
+            }
+
+        });
+
+        showQuestion();
+
+    });
+
+
+    function showQuestion() {
+
+        questionPages.forEach(
+            function(page, index) {
+
+                if (index === currentQuestion) {
+
+                    page.style.display = "block";
+
+                }
+                else {
+
+                    page.style.display = "none";
+
+                }
+
+            }
+        );
+
+
+        document.getElementById(
+            "questionProgress"
+        ).innerText =
+            "Question " +
+            (currentQuestion + 1) +
+            " of " +
+            totalQuestions;
+
+
+        document.getElementById(
+            "previousButton"
+        ).style.display =
+            currentQuestion === 0
+                ? "none"
+                : "inline-block";
+
+
+        if (
+            currentQuestion ===
+            totalQuestions - 1
+        ) {
+
+            document.getElementById(
+                "nextButton"
+            ).style.display = "none";
+
+
+            document.getElementById(
+                "submitButton"
+            ).style.display =
+                "inline-block";
+
+        }
+        else {
+
+            document.getElementById(
+                "nextButton"
+            ).style.display =
+                "inline-block";
+
+
+            document.getElementById(
+                "submitButton"
+            ).style.display =
+                "none";
+
+        }
+
+    }
+
+
+    function nextQuestion() {
+
+        if (
+            currentQuestion <
+            totalQuestions - 1
+        ) {
+
+            currentQuestion++;
+
+            showQuestion();
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+    }
+
+
+    function previousQuestion() {
+
+        if (currentQuestion > 0) {
+
+            currentQuestion--;
+
+            showQuestion();
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+    }
+
+
+    function submitExam() {
+
+        let score = 0;
+
+
+        questionPages.forEach(function(page) {
+
+            const questionNumber =
+                page.dataset.questionNumber;
+
+            const correctAnswer =
+                page.dataset.correctAnswer;
+
+            const savedAnswer =
+                localStorage.getItem(
+                    "question_" + questionNumber
+                );
+
+
+            if (savedAnswer === correctAnswer) {
+
+                score++;
+
+            }
+
+        });
+
+
+        const confirmSubmit =
+            confirm(
+                "Are you sure you want to submit your exam?"
+            );
+
+
+        if (confirmSubmit) {
+
+            alert(
+                "Exam Submitted!\n\n" +
+                "Your Score: " +
+                score +
+                " / " +
+                totalQuestions
+            );
+
+        }
+
+    }
+
+</script>
